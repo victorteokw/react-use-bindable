@@ -2,7 +2,7 @@ import "global-jsdom/register"
 import { describe, it, expect } from '@jest/globals'
 import React, { createElement } from 'react'
 import { render, fireEvent, getByText } from '@testing-library/react'
-import { makeBindable, useBindable } from '../src'
+import { childBindable, makeBindable, useBindable } from '../src'
 import type { Binding } from '../src'
 
 describe('useBindable', () => {
@@ -107,6 +107,41 @@ describe('makeBindable', () => {
           <h1>{binding.value.title}</h1>
           <p>{binding.value.content}</p>
           <Editor>{binding.binding('content')}</Editor>
+        </div>
+      )
+    }
+    const Root = () => {
+      return (
+        <ArticleProvider>
+          <Article />
+        </ArticleProvider>
+      )
+    }
+    const rootElement = createElement(Root)
+    const root = render(rootElement).container
+    const textarea = root.querySelector(".editor")
+    fireEvent.change(textarea!, {target: {value: 'Updated Content'}})
+    const p = root.querySelector("p")
+    expect(getByText(p!, "Updated Content")).toBeTruthy()
+  })
+
+  it("works with child bindable", () => {
+    const {
+      SharedBindableProvider: ArticleProvider,
+      useSharedBindable: useArticle
+    } = makeBindable({ title: "Title", content: "Content" })
+    const useContent = childBindable(useArticle, 'content')
+    const Editor = () => {
+      const content = useContent()
+      return <textarea className="editor" value={content.value} onChange={(e) => content.set(e.target.value)} />
+    }
+    const Article = () => {
+      const binding = useArticle()
+      return (
+        <div>
+          <h1>{binding.value.title}</h1>
+          <p>{binding.value.content}</p>
+          <Editor />
         </div>
       )
     }
