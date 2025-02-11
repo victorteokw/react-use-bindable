@@ -2,11 +2,29 @@
   "name": "react-use-bindable",
   "version": "0.0.1",
   "description": "Nested state bindings for React.",
-  "license": "ISC",
-  "author": "",
+  "license": "MIT",
+  "author": "Victor Teo (yeannylam@gmail.com)",
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "react": ">= 16.8.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
+    "@jest/globals": "^29.7.0",
+    "@testing-library/react": "^16.1.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "global-jsdom": "^25.0.0",
+    "jsdom": "^25.0.1",
+    "react": "^19",
+    "react-dom": "^19",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5"
   }
 }
