@@ -2,7 +2,7 @@ import "global-jsdom/register"
 import { describe, it, expect } from '@jest/globals'
 import React, { createElement } from 'react'
 import { render, fireEvent, getByText } from '@testing-library/react'
-import useBindable from '../src'
+import { makeBindable, useBindable } from '../src'
 import type { Binding } from '../src'
 
 describe('useBindable', () => {
@@ -88,5 +88,40 @@ describe('useBindable', () => {
     fireEvent.change(textarea!, { target: { value: 'Updated Content 1' } })
     const p = section1.querySelector("p")!
     expect(getByText(p, "Updated Content 1")).toBeTruthy()
+  })
+})
+
+describe('makeBindable', () => {
+  it("works", () => {
+    const {
+      SharedBindableProvider: ArticleProvider,
+      useSharedBindable: useArticle
+    } = makeBindable({ title: "Title", content: "Content" })
+    const Editor = ({ children }: { children: Binding<string> }) => {
+      return <textarea className="editor" value={children.value} onChange={(e) => children.set(e.target.value)} />
+    }
+    const Article = () => {
+      const binding = useArticle()
+      return (
+        <div>
+          <h1>{binding.value.title}</h1>
+          <p>{binding.value.content}</p>
+          <Editor>{binding.binding('content')}</Editor>
+        </div>
+      )
+    }
+    const Root = () => {
+      return (
+        <ArticleProvider>
+          <Article />
+        </ArticleProvider>
+      )
+    }
+    const rootElement = createElement(Root)
+    const root = render(rootElement).container
+    const textarea = root.querySelector(".editor")
+    fireEvent.change(textarea!, {target: {value: 'Updated Content'}})
+    const p = root.querySelector("p")
+    expect(getByText(p!, "Updated Content")).toBeTruthy()
   })
 })
