@@ -26,7 +26,7 @@ function makeChildBinding<S>(
 }
 
 export default function useBindable<T>(initialValue: T): Binding<T> {
-  const [state, setState] = useState(initialValue)
-  const binding = makeChildBinding(state, setState)
-  return { value: state, set: setState, binding }
+  const [value, set] = useState(initialValue)
+  const binding = makeChildBinding(value, set)
+  return { value, set, binding }
 }
