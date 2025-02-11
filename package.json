@@ -4,10 +4,20 @@
   "description": "Nested state bindings for React.",
   "license": "MIT",
   "author": "Victor Teo (yeannylam@gmail.com)",
-  "type": "commonjs",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/index.js",
+    "dist/index.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublish": "tsc",
+    "pretest": "tsc",
+    "pretest-cov": "tsc",
+    "test": "jest",
+    "test-cov": "jest --coverage"
   },
   "dependencies": {
     "react": ">= 16.8.1"
