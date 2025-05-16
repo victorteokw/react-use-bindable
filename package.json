@@ -1,14 +1,14 @@
 {
   "name": "react-use-bindable",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Nested state bindings for React.",
   "license": "MIT",
   "author": "Victor Teo (yeannylam@gmail.com)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist/index.js",
-    "dist/index.d.ts",
+    "dist/*.js",
+    "dist/*.d.ts",
     "README.md",
     "LICENSE"
   ],
